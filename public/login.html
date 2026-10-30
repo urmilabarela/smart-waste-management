@@ -1,0 +1,94 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoSort India | Login</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#071b2b,#123d50);
+  color: white;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+.login-box {
+  width: 90%;
+  max-width: 420px;
+  padding: 35px;
+  background: #102d40;
+  border: 1px solid #24758a;
+  border-radius: 18px;
+  box-shadow: 0 10px 40px #0006;
+}
+h1 { text-align: center; }
+h1 span { color: #13c6dc; }
+p { text-align: center; color: #b9d1da; }
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  border: 1px solid #477184;
+  border-radius: 8px;
+  background: #183e52;
+  color: white;
+}
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  background: #13c6dc;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.small { font-size: 13px; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<div class="login-box">
+  <h1>ECO<span>SORT</span> IN</h1>
+  <p>Welcome to a Cleaner India</p>
+
+  <h2>Login / Sign Up</h2>
+
+  <form id="loginForm">
+    <input type="email" id="email"
+      placeholder="Enter your email" required>
+
+    <input type="password" id="password"
+      placeholder="Enter password (minimum 6 characters)"
+      minlength="6" required>
+
+    <button type="submit">Continue</button>
+  </form>
+
+  <p class="small">
+    Join us in making India clean and sustainable.
+  </p>
+</div>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  localStorage.setItem("ecosortEmail", email);
+  localStorage.setItem("ecosortPassword", password);
+
+  window.location.href = "profile.html";
+});
+</script>
+
+</body>
+</html>
