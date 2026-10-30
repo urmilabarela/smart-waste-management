@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSort | User Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8f5;
+            color: #26382d;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #164e35;
+            color: white;
+            padding: 28px 18px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .menu-title {
+            color: #a8cbb5;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #e7f2ea;
+            text-decoration: none;
+            padding: 13px 14px;
+            border-radius: 9px;
+            margin-bottom: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #28764e;
+        }
+
+        .logout {
+            margin-top: auto;
+            padding: 13px;
+            border: none;
+            border-radius: 9px;
+            background: white;
+            color: #164e35;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Main content */
+        .main {
+            flex: 1;
+            padding: 35px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            gap: 15px;
+        }
+
+        .topbar h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .topbar p {
+            color: #78877d;
+        }
+
+        .user-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #dcefe2;
+            display: grid;
+            place-items: center;
+            font-size: 22px;
+        }
+
+        /* Welcome section */
+        .welcome {
+            background: linear-gradient(120deg, #17633e, #31945b);
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 28px;
+        }
+
+        .welcome h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .welcome p {
+            color: #e1f4e7;
+            line-height: 1.6;
+        }
+
+        /* Dashboard cards */
+        .section-title {
+            margin-bottom: 18px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            border: 1px solid #e6eee8;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 22px #164e3515;
+        }
+
+        .card-icon {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #164e35;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #78877d;
+            line-height: 1.5;
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .card a {
+            color: #21834c;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* Profile section */
+        .profile {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            margin-top: 25px;
+            border: 1px solid #e6eee8;
+        }
+
+        .profile h3 {
+            margin-bottom: 12px;
+            color: #164e35;
+        }
+
+        .profile p {
+            color: #78877d;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-height: auto;
+            }
+
+            .logo {
+                margin-bottom: 20px;
+            }
+
+            .logout {
+                margin-top: 15px;
+            }
+
+            .main {
+                padding: 20px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">🌱 EcoSort</div>
+
+        <p class="menu-title">USER MENU</p>
+
+        <a href="user-dashboard.html" class="active">🏠 Dashboard</a>
+        <a href="report.html">🗑️ Report Waste</a>
+        <a href="track.html">📍 Track Report</a>
+        <a href="centers.html">♻️ Find Center</a>
+        <a href="feedback.html">⭐ Feedback</a>
+        <a href="#profile">👤 My Profile</a>
+
+        <button class="logout" id="logoutBtn">Logout</button>
+
+    </aside>
+
+    <!-- Main Dashboard -->
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h1>Dashboard</h1>
+                <p>Welcome to your EcoSort account!</p>
+            </div>
+
+            <div class="user-icon">👤</div>
+        </header>
+
+        <!-- Welcome -->
+        <section class="welcome">
+            <h2>Welcome to EcoSort! 🌿</h2>
+            <p>
+                Keep your surroundings clean and green.
+                Report waste, track your reports and help us
+                build a cleaner environment.
+            </p>
+        </section>
+
+        <!-- Features -->
+        <h2 class="section-title">Your Activities</h2>
+
+        <section class="cards">
+
+            <div class="card">
+                <div class="card-icon">🗑️</div>
+                <h3>Report Waste</h3>
+                <p>Found waste in your area? Submit a new waste report.</p>
+                <a href="report.html">Report Now →</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📍</div>
+                <h3>Track Report</h3>
+                <p>Check the current status of your submitted reports.</p>
+                <a href="track.html">Track Now →</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">♻️</div>
+                <h3>Collection Centers</h3>
+                <p>Find waste collection centers in your area.</p>
+                <a href="centers.html">Find Center →</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">⭐</div>
+                <h3>Feedback</h3>
+                <p>Share your experience and help us improve.</p>
+                <a href="feedback.html">Give Feedback →</a>
+            </div>
+
+        </section>
+
+        <!-- Profile -->
+        <section class="profile" id="profile">
+            <h3>👤 My Profile</h3>
+            <p>Your account information will appear here after login integration.</p>
+        </section>
+
+    </main>
+
+    <script>
+        document.getElementById("logoutBtn").addEventListener("click", function () {
+            localStorage.removeItem("ecoUser");
+            localStorage.removeItem("ecoRole");
+            window.location.href = "login.html";
+        });
+    </script>
+
+</body>
+
+</html>
