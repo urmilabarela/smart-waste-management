@@ -7,7 +7,49 @@ nonrecyclable:{n:'Non-Recyclable',c:'#95a5a6',i:'🗑️',e:['Chip wrappers','Th
 const $=s=>document.querySelector(s),page=document.body.dataset.page;
 const toast=t=>{let e=$('#toast');if(!e){e=document.createElement('div');e.id='toast';document.body.append(e)}e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200)};
 const P=[['index','Home'],['track','Track'],['centers','Find a Center'],['how','How It Works'],['contact','Contact Us'],['feedback','Feedback']];
-$('#nav').outerHTML=`<nav><b>ECO<span>SORT</span> 🇮🇳</b>${P.map(p=>`<a href="${p[0]}.html" class="${p[0]==page?'on':''}">${p[1]}</a>`).join('')}</nav>`;
+$('#nav').outerHTML = `
+<div id="eco-menu">
+
+  <button id="menu-toggle" aria-label="Open dashboard">
+    ☰
+  </button>
+
+  <div id="menu-overlay"></div>
+
+  <aside id="sidebar">
+    <div class="sidebar-head">
+      <b>ECO<span>SORT</span> 🇮🇳</b>
+      <button id="menu-close">✕</button>
+    </div>
+
+    <a href="index.html">🏠 Dashboard</a>
+    <a href="report.html">📝 Report Waste</a>
+    <a href="classifity.html">♻️ Classify Waste</a>
+    <a href="center.html">📍 Find Center</a>
+    <a href="track.html">📊 Track Reports</a>
+    <a href="how.html">ℹ️ How It Works</a>
+    <a href="feedback.html">💬 Feedback</a>
+    <a href="contact.html">✉️ Contact Us</a>
+  </aside>
+
+</div>
+`;
+
+const menu = document.getElementById('sidebar');
+const overlay = document.getElementById('menu-overlay');
+
+document.getElementById('menu-toggle').onclick = () => {
+  menu.classList.add('active');
+  overlay.classList.add('active');
+};
+
+document.getElementById('menu-close').onclick = closeMenu;
+overlay.onclick = closeMenu;
+
+function closeMenu() {
+  menu.classList.remove('active');
+  overlay.classList.remove('active');
+}
 const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.15});
 const reveal=()=>document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
 const post=(u,b)=>fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(r=>r.json());
