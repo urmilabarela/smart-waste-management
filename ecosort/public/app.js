@@ -6,7 +6,7 @@ hazardous:{n:'Hazardous',c:'#e74c3c',i:'☣️',e:['Paint & solvents','Expired m
 nonrecyclable:{n:'Non-Recyclable',c:'#95a5a6',i:'🗑️',e:['Chip wrappers','Thermocol','Diapers'],d:'Wrap securely and put in the general (grey) bin. Reduce where possible.'}};
 const $=s=>document.querySelector(s),page=document.body.dataset.page;
 const toast=t=>{let e=$('#toast');if(!e){e=document.createElement('div');e.id='toast';document.body.append(e)}e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200)};
-const P=[['index','Home'],['track','Track'],['centers','Find a Center'],['how','How It Works'],['contact','Contact Us'],['feedback','Feedback']];
+const P=[['index','Home'],['track','Track'],['centers','Find a Center'],['how','How It Works'],['contact','Contact Us'],['feedback','Feedback'],['profile','Profile'],['notification','Notification']];
 $('#nav').outerHTML = `
 <div id="eco-menu">
 
@@ -30,6 +30,8 @@ $('#nav').outerHTML = `
     <a href="how.html">ℹ️ How It Works</a>
     <a href="feedback.html">💬 Feedback</a>
     <a href="contact.html">✉️ Contact Us</a>
+    <a href="profile.html">👤 My Profile</a>
+    <a href="notifications.html">🔔 Notifications</a>
   </aside>
 
 </div>

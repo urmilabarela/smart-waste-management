@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notifications | EcoSort</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .notification-page {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 125px 25px 60px;
+        }
+
+        .notification-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .notification-title h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            margin-bottom: 5px;
+        }
+
+        .notification-title p {
+            color: var(--mut);
+            font-size: 14px;
+        }
+
+        .notification-count {
+            background: #102b55;
+            border: 1px solid var(--line);
+            color: var(--acc);
+            padding: 9px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+        }
+
+        .notification-section {
+            background: linear-gradient(145deg, #0a1d44, #061534);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 22px;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .section-heading h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+
+        .notification-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 19px;
+            margin-bottom: 12px;
+            border: 1px solid #16376f;
+            border-radius: 14px;
+            background: #0d2450;
+            transition: .25s;
+            position: relative;
+        }
+
+        .notification-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .notification-card:hover {
+            border-color: var(--acc);
+            transform: translateX(4px);
+            background: #102b5b;
+        }
+
+        .notification-icon {
+            width: 45px;
+            height: 45px;
+            min-width: 45px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            font-size: 21px;
+            background: #153968;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-content h3 {
+            font-size: 15px;
+            margin-bottom: 5px;
+            color: var(--tx);
+        }
+
+        .notification-content p {
+            font-size: 13px;
+            color: var(--mut);
+            line-height: 1.6;
+        }
+
+        .notification-content small {
+            display: block;
+            margin-top: 9px;
+            color: #718bb8;
+            font-size: 11px;
+        }
+
+        .unread-dot {
+            width: 8px;
+            height: 8px;
+            min-width: 8px;
+            background: var(--acc);
+            border-radius: 50%;
+            margin-top: 7px;
+            box-shadow: 0 0 10px var(--acc);
+        }
+
+        .notification-footer {
+            text-align: center;
+            color: var(--mut);
+            font-size: 12px;
+            margin-top: 22px;
+        }
+
+        @media(max-width:600px) {
+            .notification-page {
+                padding: 110px 16px 40px;
+            }
+
+            .notification-section {
+                padding: 15px;
+            }
+
+            .notification-card {
+                padding: 14px;
+                gap: 12px;
+            }
+
+            .notification-icon {
+                width: 38px;
+                height: 38px;
+                min-width: 38px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body data-page="notifications">
+
+    <div id="nav"></div>
+
+    <main class="notification-page">
+
+        <div class="notification-top">
+            <div class="notification-title">
+                <h1>Notifications<span style="color:var(--acc)">.</span></h1>
+                <p>Stay updated with your EcoSort activities.</p>
+            </div>
+
+            <div class="notification-count">
+                🔔 3 Updates
+            </div>
+        </div>
+
+        <section class="notification-section">
+
+            <div class="section-heading">
+                <h2>Recent Activity</h2>
+            </div>
+
+            <div class="notification-card">
+                <div class="notification-icon">✅</div>
+                <div class="notification-content">
+                    <h3>Report Submitted</h3>
+                    <p>Your waste report has been submitted successfully. Thank you for helping keep your city clean!
+                    </p>
+                    <small>EcoSort Update</small>
+                </div>
+                <div class="unread-dot"></div>
+            </div>
+
+            <div class="notification-card">
+                <div class="notification-icon">🚛</div>
+                <div class="notification-content">
+                    <h3>Collection Update</h3>
+                    <p>Your waste collection request is currently under review.</p>
+                    <small>EcoSort Update</small>
+                </div>
+                <div class="unread-dot"></div>
+            </div>
+
+            <div class="notification-card">
+                <div class="notification-icon">🌱</div>
+                <div class="notification-content">
+                    <h3>Keep Your City Clean</h3>
+                    <p>Separate wet and dry waste to support a cleaner and greener environment.</p>
+                    <small>EcoSort Message</small>
+                </div>
+            </div>
+
+        </section>
+
+        <div class="notification-footer">
+            Made for a Cleaner India 🇮🇳
+        </div>
+
+    </main>
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
