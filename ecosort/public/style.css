@@ -36,3 +36,85 @@ input,select,textarea{width:100%;padding:13px;margin:6px 0 16px;background:#0615
 footer{padding:60px 5%;text-align:center;color:var(--mut);border-top:1px solid var(--line)}footer b{font:400 3rem Anton;display:block;color:var(--tx)}
 #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--acc);color:#03122e;font-weight:700;padding:11px 24px;border-radius:30px;transition:.4s;z-index:90}#toast.show{transform:translateX(-50%)}
 .reveal{opacity:0;transform:translateY(40px);transition:.8s cubic-bezier(.2,.7,.2,1)}.reveal.in{opacity:1;transform:none}
+/* HAMBURGER MENU */
+
+#menu-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+  background: #123c2c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 270px;
+  height: 100vh;
+  background: #102c22;
+  z-index: 1003;
+  padding: 25px 20px;
+  box-sizing: border-box;
+  transition: left 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#sidebar.active {
+  left: 0;
+}
+
+.sidebar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  font-size: 21px;
+  margin-bottom: 25px;
+}
+
+.sidebar-head span {
+  color: #55d68b;
+}
+
+#menu-close {
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+#sidebar a {
+  color: white;
+  text-decoration: none;
+  padding: 13px;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+#sidebar a:hover {
+  background: #245b40;
+  color: #70e69b;
+}
+
+#menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1002;
+  display: none;
+}
+
+#menu-overlay.active {
+  display: block;
+}
