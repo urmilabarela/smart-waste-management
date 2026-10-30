@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>EcoSort - Report</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="report">
+    <div id="nav"></div>
+    <div class="page">
+        <h2>Report Waste</h2>
+        <p class="sub">Upload a photo, we suggest the category, and a team is dispatched.</p>
+        <div class="card">
+            <label>Waste photo</label><input type="file" id="f" accept="image/*"><img id="pv" class="prev" hidden>
+            <p id="ai"></p>
+            <label>Category (editable)</label><select id="cat"></select>
+            <div class="row">
+                <div><label>Name</label><input id="name"></div>
+                <div><label>Phone (10 digits)</label><input id="phone" maxlength="10"></div>
+            </div>
+            <button class="btn sm" id="loc" type="button">📍 Detect my location</button><br><br><label>Address
+                (editable)</label><input id="addr">
+            <label>Date</label><input id="date" readonly><label>Additional details</label><textarea id="det"
+                rows="3"></textarea>
+            <button class="btn" id="go" type="button">Submit Report</button>
+        </div>
+        <div class="res" id="done"></div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

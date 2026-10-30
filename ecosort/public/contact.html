@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | EcoSort</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="contact">
+
+    <div id="nav"></div>
+
+    <main class="page">
+        <h2>Contact Us 🌿</h2>
+        <p class="sub">Have a question or suggestion? We are here to help!</p>
+
+        <div class="card">
+            <form id="contactForm">
+                <label for="name">Full Name</label>
+                <input id="name" name="name" required maxlength="80" placeholder="Enter your name">
+
+                <label for="email">Email Address</label>
+                <input id="email" name="email" type="email" required placeholder="Enter your email">
+
+                <label for="subject">Subject</label>
+                <input id="subject" name="subject" required maxlength="120" placeholder="Enter subject">
+
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required maxlength="2000" rows="5"
+                    placeholder="Write your message..."></textarea>
+
+                <button class="btn" type="submit">Send Message</button>
+                <p id="result" role="status"></p>
+            </form>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const form = e.currentTarget;
+            const result = document.getElementById('result');
+            const data = Object.fromEntries(new FormData(form).entries());
+
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const text = await response.text();
+                let answer;
+
+                try {
+                    answer = JSON.parse(text);
+                } catch {
+                    console.log("Server response:", text);
+                    throw new Error("Backend se JSON nahi mila.");
+                }
+
+                if (!response.ok) {
+                    throw new Error(answer.error || 'Could not send message.');
+                }
+
+                result.textContent = 'Message sent successfully!';
+                form.reset();
+            } catch (error) {
+                result.textContent = error.message || 'Something went wrong.';
+            }
+        });
+    </script>
+
+</body>
+
+</html>

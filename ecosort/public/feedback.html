@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSort - Feedback</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="nav"></div>
+
+    <main style="max-width:650px; margin:40px auto; padding:24px;">
+        <h2 style="font-size:24px; margin-bottom:10px;">Your Feedback 🌿</h2>
+        <p>Help us improve EcoSort and our waste management services.</p>
+
+        <form id="feedbackForm">
+            <label for="reportId">Report ID (optional)</label>
+            <input id="reportId" name="reportId" placeholder="e.g. ES1024">
+
+            <br><br>
+
+            <label for="rating">Rate your experience</label>
+            <select id="rating" name="rating" required>
+                <option value="">Choose a rating</option>
+                <option value="5">5 - Excellent</option>
+                <option value="4">4 - Very good</option>
+                <option value="3">3 - Good</option>
+                <option value="2">2 - Needs improvement</option>
+                <option value="1">1 - Poor</option>
+            </select>
+
+            <br><br>
+
+            <label for="message">Your feedback</label>
+            <textarea id="message" name="message" placeholder="Write your feedback here..." rows="5"
+                required></textarea>
+
+            <br><br>
+
+            <button type="submit">Submit Feedback</button>
+            <p id="result" role="status"></p>
+        </form>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        document.getElementById('feedbackForm')
+            .addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const result = document.getElementById('result');
+                result.textContent = 'Submitting...';
+
+                const payload = {
+                    reportId: document.getElementById('reportId').value.trim(),
+                    rating: Number(document.getElementById('rating').value),
+                    message: document.getElementById('message').value.trim()
+                };
+
+                try {
+                    const response = await fetch('/api/feedback', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.error || 'Submission failed');
+
+                    result.textContent = data.message || 'Feedback submitted successfully!';
+                    this.reset();
+                } catch (error) {
+                    result.textContent = 'Error: ' + error.message;
+                    console.error(error);
+                }
+            });
+    </script>
+</body>
+
+</html>

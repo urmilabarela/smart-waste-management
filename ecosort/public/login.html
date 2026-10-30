@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSort Login</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+
+<body>
+
+    <div class="login-container">
+        <h1>🌱 EcoSort</h1>
+        <h2>Welcome Back!</h2>
+        <p>Login to continue</p>
+
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Enter your email" required>
+
+            <input type="password" id="password" placeholder="Enter password" required>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("loginForm")
+            .addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                localStorage.setItem("ecoUser", "loggedIn");
+
+                window.location.href = "index.html";
+            });
+    </script>
+
+</body>
+
+</html>
