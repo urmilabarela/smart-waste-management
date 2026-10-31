@@ -1,16 +1,110 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EcoSort India - Waste Management</title><link rel="stylesheet" href="style.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script></head><body data-page="index"><div id="nav"></div>
-<div class="hero"><div id="scene"></div><div class="txt"><div class="kick">SWACHH · SEGREGATE · SUSTAIN</div><h1>India's waste.<br><em>Our move.</em></h1><p>Step into a polluted Indian street. Tap the trash, send it to the right bin and watch the air clear.</p><div class="cta"><a class="btn" href="report.html">Report Waste</a><a class="btn g" href="classify.html">Classify with AI</a></div></div>
-<div class="hud"><div id="meter"><small>CLEAN INDIA METER</small><div><i></i></div></div><div id="score">0 SORTED</div></div></div>
-<div class="mq"><div>Segregate at source<b>✦</b>Wet · Dry · Hazardous<b>✦</b>≈62M tonnes of waste a year<b>✦</b>Reduce · Reuse · Recycle<b>✦</b>Segregate at source<b>✦</b>Wet · Dry · Hazardous<b>✦</b>≈62M tonnes of waste a year<b>✦</b>Reduce · Reuse · Recycle<b>✦</b></div></div>
-<section><h2>Why it <span>matters</span></h2><p class="sub">From metro lanes to village nalas, how we handle waste decides how we live.</p><div class="grid">
-<div class="panel ph reveal" style="background-image:linear-gradient(180deg,#030b1f33,#030b1fdd),url(img/env.jpg)"><div class="big">01</div><h3>Environment</h3><p>Segregation cuts landfill load, saves resources and lowers emissions.</p></div>
-<div class="panel ph reveal" style="background-image:linear-gradient(180deg,#030b1f33,#030b1fdd),url(img/health.jpg)"><div class="big">02</div><h3>Public Health</h3><p>Safe disposal keeps disease, pests and toxins out of our neighbourhoods.</p></div>
-<div class="panel ph reveal" style="background-image:linear-gradient(180deg,#030b1f33,#030b1fdd),url(img/city.jpg)"><div class="big">03</div><h3>Clean Cities</h3><p>Efficient collection keeps drains, streets and markets liveable.</p></div></div></section>
-<section id="categories"><h2>Five waste <span>streams</span></h2><p class="sub">Know what goes where, with examples and disposal steps.</p><div class="grid" id="cats"></div></section>
-<section id="impact"><h2>The real <span>cost</span></h2><p class="sub">What mismanaged waste does to land, water, air and life.</p><div class="grid">
-<div class="panel ph reveal" style="background-image:linear-gradient(180deg,#030b1f33,#030b1fdd),url(img/soil.jpg)"><h3>Soil Pollution</h3><p>Heavy metals and chemicals poison soil and enter crops.</p></div>
-<div class="panel ph reveal" style="background-image:linear-gradient(180deg,#030b1f33,#030b1fdd),url(img/water.jpg)"><h3>Water Pollution</h3><p>Plastic and toxins choke rivers and contaminate groundwater.</p></div>
-<div class="panel ph reveal" style="background-image:linear-gradient(180deg,#030b1f33,#030b1fdd),url(img/air.jpg)"><h3>Air Pollution</h3><p>Open burning and rotting waste release smoke and methane.</p></div>
-<div class="panel ph reveal" style="background-image:linear-gradient(180deg,#030b1f33,#030b1fdd),url(img/wildlife.jpg)"><h3>Wildlife Harm</h3><p>Cattle, birds and marine life swallow or get tangled in waste.</p></div></div></section>
-<footer><b>Be the change.</b>Report it. Sort it. Track it. <br><br><a class="btn" href="report.html">Report waste now</a></footer>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script><script src="app.js"></script><script src="home3d.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>EcoSort India - Waste Management</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+
+<body data-page="index">
+    <div id="nav"></div>
+
+    <div class="hero">
+        <div id="scene"></div>
+        <div class="txt">
+            <div class="kick">SWACHH · SEGREGATE · SUSTAIN</div>
+            <h1>India's waste.<br><em>Our move.</em></h1>
+            <p>Step into a polluted Indian street. Tap the trash, send it to the right bin and watch the air clear.</p>
+            <div class="cta">
+                <a class="btn" href="report.html">Report Waste</a>
+                <a class="btn g" href="classify.html">Classify with AI</a>
+            </div>
+        </div>
+        <div class="hud">
+            <div id="meter">
+                <small>CLEAN INDIA METER</small>
+                <div><i></i></div>
+            </div>
+            <div id="score">0 SORTED</div>
+        </div>
+    </div>
+
+    <div class="mq">
+        <div>Segregate at source<b>✦</b>Wet · Dry · Hazardous<b>✦</b>≈62M tonnes of waste a year<b>✦</b>Reduce · Reuse ·
+            Recycle<b>✦</b>Segregate at source<b>✦</b>Wet · Dry · Hazardous<b>✦</b>≈62M tonnes of waste a
+            year<b>✦</b>Reduce · Reuse · Recycle<b>✦</b></div>
+    </div>
+
+    <section>
+        <h2>Why it <span>matters</span></h2>
+        <p class="sub">From metro lanes to village nalas, how we handle waste decides how we live.</p>
+        <div class="grid">
+            <div class="panel ph reveal"
+                style="background-image:linear-gradient(180deg,#030b1f33,#030b1fdd),url(img/env.jpg)">
+                <div class="big">01</div>
+                <h3>Environment</h3>
+                <p>Segregation cuts landfill load, saves resources and lowers emissions.</p>
+            </div>
+            <div class="panel ph reveal"
+                style="background-image:linear-gradient(180deg,#030b1f33,#030b1fdd),url(img/health.jpg)">
+                <div class="big">02</div>
+                <h3>Public Health</h3>
+                <p>Safe disposal keeps disease, pests and toxins out of our neighbourhoods.</p>
+            </div>
+            <div class="panel ph reveal"
+                style="background-image:linear-gradient(180deg,#030b1f33,#030b1fdd),url(img/city.jpg)">
+                <div class="big">03</div>
+                <h3>Clean Cities</h3>
+                <p>Efficient collection keeps drains, streets and markets liveable.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="categories">
+        <h2>Five waste <span>streams</span></h2>
+        <p class="sub">Know what goes where, with examples and disposal steps.</p>
+        <div class="grid" id="cats"></div>
+    </section>
+
+    <section id="impact">
+        <h2>The real <span>cost</span></h2>
+        <p class="sub">What mismanaged waste does to land, water, air and life.</p>
+        <div class="grid">
+            <div class="panel ph reveal"
+                style="background-image:linear-gradient(180deg,#030b1f33,#030b1fdd),url(img/soil.jpg)">
+                <h3>Soil Pollution</h3>
+                <p>Heavy metals and chemicals poison soil and enter crops.</p>
+            </div>
+            <div class="panel ph reveal"
+                style="background-image:linear-gradient(180deg,#030b1f33,#030b1fdd),url(img/water.jpg)">
+                <h3>Water Pollution</h3>
+                <p>Plastic and toxins choke rivers and contaminate groundwater.</p>
+            </div>
+            <div class="panel ph reveal"
+                style="background-image:linear-gradient(180deg,#030b1f33,#030b1fdd),url(img/air.jpg)">
+                <h3>Air Pollution</h3>
+                <p>Open burning and rotting waste release smoke and methane.</p>
+            </div>
+            <div class="panel ph reveal"
+                style="background-image:linear-gradient(180deg,#030b1f33,#030b1fdd),url(img/wildlife.jpg)">
+                <h3>Wildlife Harm</h3>
+                <p>Cattle, birds and marine life swallow or get tangled in waste.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <b>Be the change.</b>Report it. Sort it. Track it.
+        <br><br>
+        <a class="btn" href="report.html">Report waste now</a>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="app.js"></script>
+    <script src="home3d.js"></script>
+</body>
+
+</html>

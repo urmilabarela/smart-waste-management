@@ -1,8 +1,36 @@
+const crypto = require('crypto');
 const express=require('express'),fs=require('fs'),path=require('path');
+const bcrypt = require('bcryptjs');
+const session = require('express-session');
 const app=express(),DB=path.join(__dirname,'data','reports.json');
-app.use(express.json({limit:'6mb'}));app.use(express.static(path.join(__dirname,'public')));
+app.use(express.json({limit:'6mb'}));
+app.use(session({
+  secret: 'ecosort-demo-secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: false,
+    maxAge: 24 * 60 * 60 * 1000
+  }
+}));
+app.use(express.static(path.join(__dirname,'public')));
 fs.mkdirSync(path.dirname(DB),{recursive:true});
 const load=()=>{try{return JSON.parse(fs.readFileSync(DB))}catch{return[]}},save=r=>fs.writeFileSync(DB,JSON.stringify(r,null,1));
+const USERS_DB = path.join(__dirname, 'data', 'users.json');
+
+const loadUsers = () => {
+  try {
+    return JSON.parse(fs.readFileSync(USERS_DB, 'utf8'));
+  } catch {
+    return [];
+  }
+};
+
+const saveUsers = (users) => {
+  fs.writeFileSync(USERS_DB, JSON.stringify(users, null, 2));
+};
 const STEPS=['Submitted','Under Review','Assigned','Collected','Completed'],TEAMS=['Team Alpha','Team Bravo','Team Green'];
 // DEMO: status advances every 15s so you can watch tracking work
 const step=r=>Math.min(4,Math.floor((Date.now()-r.created)/15000));
@@ -119,5 +147,187 @@ app.post('/api/feedback', (req, res) => {
 });
 
 
+
+
+
+
+
+// USER DASHBOARD API
+
+app.get('/api/dashboard-stats', (req, res) => {
+    try {
+        const reports = load();
+
+        const totalReports = reports.length;
+
+        const completedReports = reports.filter(
+            r => step(r) === 4
+        ).length;
+
+        const pendingReports = totalReports - completedReports;
+
+        const categoryCounts = {};
+
+        reports.forEach(report => {
+            const category = report.category || 'Other';
+
+            categoryCounts[category] =
+                (categoryCounts[category] || 0) + 1;
+        });
+
+        const recentReports = reports
+            .slice()
+            .sort((a, b) => b.created - a.created)
+            .slice(0, 5)
+            .map(r => ({
+                id: r.id,
+                name: r.name,
+                category: r.category,
+                address: r.address,
+                status: STEPS[step(r)],
+                created: r.created
+            }));
+
+        res.json({
+            success: true,
+            totalReports,
+            completedReports,
+            pendingReports,
+            categoryCounts,
+            recentReports
+        });
+
+    } catch (error) {
+        console.error('Dashboard error:', error);
+
+        res.status(500).json({
+            success: false,
+            message: 'Dashboard data could not be loaded'
+        });
+    }
+});
+// USER REGISTRATION API
+app.post('/api/auth/register', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email and password are required'
+      });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password must be at least 6 characters'
+      });
+    }
+
+    const users = loadUsers();
+    const cleanEmail = email.trim().toLowerCase();
+
+    if (users.find(user => user.email === cleanEmail)) {
+      return res.status(409).json({
+        success: false,
+        message: 'Account already exists'
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = {
+      id: crypto.randomUUID(),
+      name: name || '',
+      email: cleanEmail,
+      password: hashedPassword
+    };
+
+    users.push(newUser);
+    saveUsers(users);
+
+    req.session.userId = newUser.id;
+
+    res.status(201).json({
+      success: true,
+      message: 'Account created successfully',
+      user: {
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email
+      }
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Registration failed'
+    });
+  }
+});
+// USER LOGIN API
+app.post('/api/auth/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email and password are required'
+      });
+    }
+
+    const users = loadUsers();
+    const cleanEmail = email.trim().toLowerCase();
+
+    const user = users.find(u => u.email === cleanEmail);
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid email or password'
+      });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid email or password'
+      });
+    }
+
+    req.session.userId = user.id;
+
+    res.json({
+      success: true,
+      message: 'Login successful',
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email
+      }
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Login failed'
+    });
+  }
+});
+// USER REGISTRATION API
+app.post('/api/auth/register', async (req, res) => {
+   // registration code
+});
+
+// USER LOGIN API
+app.post('/api/auth/login', async (req, res) => {
+   // login code
+});
+
+app.listen(3000,()=>console.log('EcoSort running -> http://localhost:3000'));
 app.listen(3000,()=>console.log('EcoSort running -> http://localhost:3000'));
 

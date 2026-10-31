@@ -91,3 +91,57 @@ const cur=document.createElement('div');cur.className='cur';document.body.append
 addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';cur.classList.toggle('h',!!e.target.closest('a,button,.card,label')||!!window.hov)});
 addEventListener('scroll',()=>document.querySelector('nav').classList.toggle('sc',scrollY>40));
 
+// USER DASHBOARD BACKEND CONNECTION
+
+if (document.body.dataset.page === 'index') {
+
+    fetch('/api/dashboard-stats')
+        .then(response => response.json())
+        .then(data => {
+
+            if (!data.success) return;
+
+            // Dashboard cards
+            document.getElementById('totalReports').textContent =
+                data.totalReports;
+
+            document.getElementById('completedReports').textContent =
+                data.completedReports;
+
+            document.getElementById('pendingReports').textContent =
+                data.pendingReports;
+
+            // Category statistics
+            const categoryBox = document.getElementById('categoryStats');
+            categoryBox.textContent = '';
+
+            Object.entries(data.categoryCounts).forEach(([category, count]) => {
+                const item = document.createElement('p');
+                item.textContent = `${category}: ${count} reports`;
+                categoryBox.appendChild(item);
+            });
+
+            // Recent reports
+            const recentBox = document.getElementById('recentReports');
+            recentBox.textContent = '';
+
+            data.recentReports.forEach(report => {
+                const item = document.createElement('div');
+
+                const heading = document.createElement('h3');
+                heading.textContent = report.id;
+
+                const details = document.createElement('p');
+                details.textContent =
+                    `${report.name} | ${report.category} | ${report.status}`;
+
+                item.appendChild(heading);
+                item.appendChild(details);
+                recentBox.appendChild(item);
+            });
+
+        })
+        .catch(error => {
+            console.error('Dashboard error:', error);
+        });
+}
