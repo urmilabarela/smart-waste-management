@@ -15,6 +15,9 @@ app.use(session({
     maxAge: 24 * 60 * 60 * 1000
   }
 }));
+app.get('/', (req, res) => {
+  res.redirect('/login.html');
+});
 app.use(express.static(path.join(__dirname,'public')));
 fs.mkdirSync(path.dirname(DB),{recursive:true});
 const load=()=>{try{return JSON.parse(fs.readFileSync(DB))}catch{return[]}},save=r=>fs.writeFileSync(DB,JSON.stringify(r,null,1));
@@ -318,16 +321,8 @@ app.post('/api/auth/login', async (req, res) => {
     });
   }
 });
-// USER REGISTRATION API
-app.post('/api/auth/register', async (req, res) => {
-   // registration code
-});
 
-// USER LOGIN API
-app.post('/api/auth/login', async (req, res) => {
-   // login code
-});
 
 app.listen(3000,()=>console.log('EcoSort running -> http://localhost:3000'));
-app.listen(3000,()=>console.log('EcoSort running -> http://localhost:3000'));
+
 

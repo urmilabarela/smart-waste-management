@@ -1,94 +1,155 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EcoSort India | Login</title>
-<style>
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg,#071b2b,#123d50);
-  color: white;
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-}
-.login-box {
-  width: 90%;
-  max-width: 420px;
-  padding: 35px;
-  background: #102d40;
-  border: 1px solid #24758a;
-  border-radius: 18px;
-  box-shadow: 0 10px 40px #0006;
-}
-h1 { text-align: center; }
-h1 span { color: #13c6dc; }
-p { text-align: center; color: #b9d1da; }
-input {
-  width: 100%;
-  padding: 14px;
-  margin: 10px 0;
-  border: 1px solid #477184;
-  border-radius: 8px;
-  background: #183e52;
-  color: white;
-}
-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 15px;
-  background: #13c6dc;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.small { font-size: 13px; margin-top: 20px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoSort - Login</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #071b2b, #123d50);
+      color: white;
+    }
+
+    .login-box {
+      width: 90%;
+      max-width: 420px;
+      padding: 35px;
+      background: #102d40;
+      border: 1px solid #24758a;
+      border-radius: 18px;
+    }
+
+    h1,
+    h2,
+    p {
+      text-align: center;
+    }
+
+    h1 span {
+      color: #13c6dc;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      border: 1px solid #477184;
+      border-radius: 8px;
+      background: #183e52;
+      color: white;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #13c6dc;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #message {
+      color: #13c6dc;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="login-box">
-  <h1>ECO<span>SORT</span> IN</h1>
-  <p>Welcome to a Cleaner India</p>
+  <div class="login-box">
 
-  <h2>Login / Sign Up</h2>
+    <h1>ECO<span>SORT</span> IN</h1>
+    <p>Welcome to a Cleaner India</p>
 
-  <form id="loginForm">
-    <input type="email" id="email"
-      placeholder="Enter your email" required>
+    <h2>Login / Sign Up</h2>
 
-    <input type="password" id="password"
-      placeholder="Enter password (minimum 6 characters)"
-      minlength="6" required>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Enter Email" required>
 
-    <button type="submit">Continue</button>
-  </form>
+      <input type="password" id="password" placeholder="Enter Password" required minlength="6">
 
-  <p class="small">
-    Join us in making India clean and sustainable.
-  </p>
-</div>
+      <button type="submit">Login</button>
+      <button type="button" id="signupBtn">Create New Account</button>
+    </form>
 
-<script>
-document.getElementById("loginForm").addEventListener("submit", function(e) {
-  e.preventDefault();
+    <p id="message"></p>
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  </div>
 
-  localStorage.setItem("ecosortEmail", email);
-  localStorage.setItem("ecosortPassword", password);
+  <script>
+    const form = document.getElementById("loginForm");
+    const message = document.getElementById("message");
 
-  window.location.href = "profile.html";
-});
-</script>
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      try {
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          window.location.href = "profile.html";
+        } else {
+          message.textContent = data.message;
+        }
+      } catch (error) {
+        message.textContent = "Server connection failed!";
+      }
+    });
+
+    document.getElementById("signupBtn").addEventListener("click", async function () {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (!email || password.length < 6) {
+        message.textContent = "Enter email and password (minimum 6 characters).";
+        return;
+      }
+
+      try {
+        const response = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          window.location.href = "profile.html";
+        } else {
+          message.textContent = data.message;
+        }
+      } catch (error) {
+        message.textContent = "Server connection failed!";
+      }
+    });
+  </script>
 
 </body>
+
 </html>
