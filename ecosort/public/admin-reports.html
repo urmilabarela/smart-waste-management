@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Reports | EcoSort Admin</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body class="admin-page">
+
+    <header class="admin-topbar">
+        <h2>EcoSort Admin</h2>
+        <span>Manage Reports</span>
+    </header>
+
+    <main class="admin-main">
+        <h1>Manage Reports</h1>
+        <p>View and manage waste reports submitted by users.</p>
+
+        <div class="admin-content-card">
+            <h2>All Waste Reports</h2>
+
+            <p id="reports-message">Loading reports...</p>
+            <p id="status-message"></p>
+
+            <div id="reports-list"></div>
+        </div>
+
+        <a href="admin-dashboard.html">← Back to Dashboard</a>
+    </main>
+
+    <script>
+        async function loadReports() {
+            const message = document.getElementById("reports-message");
+            const list = document.getElementById("reports-list");
+
+            try {
+                const response = await fetch("/api/reports");
+
+                if (!response.ok) {
+                    throw new Error("Could not load reports");
+                }
+
+                const reports = await response.json();
+
+                message.textContent = "Total Reports: " + reports.length;
+                list.innerHTML = "";
+
+                reports.forEach(report => {
+                    const card = document.createElement("div");
+                    card.className = "admin-stat-card";
+
+                    const heading = document.createElement("h3");
+                    heading.textContent = report.title || report.wasteType || "Waste Report";
+
+                    const location = document.createElement("p");
+                    location.textContent = "Location: " + (report.location || "Not available");
+
+                    const currentStatus = document.createElement("p");
+                    currentStatus.textContent = "Current Status: " + (report.status || "Submitted");
+
+                    const select = document.createElement("select");
+
+                    [
+                        "Submitted",
+                        "Under Review",
+                        "Assigned",
+                        "Collected",
+                        "Completed"
+                    ].forEach(status => {
+                        const option = document.createElement("option");
+                        option.value = status;
+                        option.textContent = status;
+                        select.appendChild(option);
+                    });
+
+                    select.value = report.status || "Submitted";
+
+                    const button = document.createElement("button");
+                    button.textContent = "Update Status";
+
+                    button.onclick = async () => {
+                        try {
+                            const result = await fetch(
+                                "/api/reports/" + encodeURIComponent(report.id) + "/status",
+                                {
+                                    method: "PUT",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        status: select.value
+                                    })
+                                }
+                            );
+
+                            const data = await result.json();
+
+                            document.getElementById("status-message").textContent =
+                                data.message || "Status update failed";
+
+                            if (result.ok) {
+                                loadReports();
+                            }
+
+                        } catch (error) {
+                            document.getElementById("status-message").textContent =
+                                "Could not update status.";
+                        }
+                    };
+
+                    card.append(heading, location, currentStatus, select, button);
+                    list.appendChild(card);
+                });
+
+            } catch (error) {
+                message.textContent = "Reports load nahi ho paayi.";
+                console.error(error);
+            }
+        }
+
+        loadReports();
+    </script>
+
+</body>
+
+</html>

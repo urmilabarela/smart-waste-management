@@ -55,6 +55,53 @@ app.post('/api/reports',(req,res)=>{const b=req.body;
  if(!b.name||!/^\d{10}$/.test(b.phone||''))return res.status(400).json({error:'Valid name and 10-digit phone required'});
  const list=load(),r={id:'WM-'+Date.now().toString(36).toUpperCase().slice(-6),created:Date.now(),name:b.name,phone:b.phone,category:b.category,address:b.address,lat:b.lat,lng:b.lng,details:b.details,image:b.image,team:TEAMS[Math.floor(Math.random()*3)]};
  list.push(r);save(list);res.json({id:r.id})});
+ app.get('/api/reports', (req, res) => {
+    try {
+        const reports = load();
+        res.json(reports);
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Reports load nahi ho paayi"
+        });
+    }
+});
+
+
+app.put('/api/reports/:id/status', (req, res) => {
+    const allowedStatuses = [
+        "Submitted",
+        "Under Review",
+        "Assigned",
+        "Collected",
+        "Completed"
+    ];
+
+    const { status } = req.body;
+
+    if (!allowedStatuses.includes(status)) {
+        return res.status(400).json({ success: false, message: "Invalid status" });
+    }
+
+    const reports = load();
+
+    const report = reports.find(
+        r => String(r.id).toUpperCase() === req.params.id.toUpperCase()
+    );
+
+    if (!report) {
+        return res.status(404).json({ success: false, message: "Report not found" });
+    }
+
+    report.status = status;
+    save(reports);
+
+    res.json({ success: true, message: "Status updated", report });
+});
+
+
+
+
 app.get('/api/reports/:id',(req,res)=>{const r=load().find(x=>x.id===req.params.id.toUpperCase());
  if(!r)return res.status(404).json({error:'Report not found'});
  const s=step(r);res.json({id:r.id,category:r.category,address:r.address,created:r.created,step:s,steps:STEPS,team:s>=2?r.team:null})});
@@ -210,6 +257,8 @@ app.get('/api/dashboard-stats', (req, res) => {
     }
 });
 // USER REGISTRATION API
+// USER REGISTRATION API
+
 app.post('/api/auth/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -229,6 +278,7 @@ app.post('/api/auth/register', async (req, res) => {
     }
 
     const users = loadUsers();
+    console.log(users.map(u => ({ email: u.email, role: u.role })));
     const cleanEmail = email.trim().toLowerCase();
 
     if (users.find(user => user.email === cleanEmail)) {
@@ -244,13 +294,12 @@ app.post('/api/auth/register', async (req, res) => {
       id: crypto.randomUUID(),
       name: name || '',
       email: cleanEmail,
-      password: hashedPassword
+      password: hashedPassword,
+      role: 'user'
     };
 
     users.push(newUser);
     saveUsers(users);
-
-    req.session.userId = newUser.id;
 
     res.status(201).json({
       success: true,
@@ -258,18 +307,23 @@ app.post('/api/auth/register', async (req, res) => {
       user: {
         id: newUser.id,
         name: newUser.name,
-        email: newUser.email
+        email: newUser.email,
+        role: newUser.role
       }
     });
 
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       success: false,
       message: 'Registration failed'
     });
   }
 });
-// USER LOGIN API
+
+// USER AND ADMIN LOGIN API
+
 app.post('/api/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -285,6 +339,8 @@ app.post('/api/auth/login', async (req, res) => {
     const cleanEmail = email.trim().toLowerCase();
 
     const user = users.find(u => u.email === cleanEmail);
+    console.log('Users file:', USERS_DB);
+    console.log('Matched account role:', user?.role);
 
     if (!user) {
       return res.status(401).json({
@@ -302,7 +358,10 @@ app.post('/api/auth/login', async (req, res) => {
       });
     }
 
+    const role = user.role || 'user';
+
     req.session.userId = user.id;
+    req.session.userRole = role;
 
     res.json({
       success: true,
@@ -310,11 +369,14 @@ app.post('/api/auth/login', async (req, res) => {
       user: {
         id: user.id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: role
       }
     });
 
   } catch (error) {
+    console.error('Login error:', error);
+
     res.status(500).json({
       success: false,
       message: 'Login failed'

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users | EcoSort Admin</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body class="admin-page">
+
+    <header class="admin-topbar">
+        <h2>EcoSort Admin</h2>
+        <span>Manage Users</span>
+    </header>
+
+    <main class="admin-main">
+        <h1>Manage Users</h1>
+        <p>View registered EcoSort users.</p>
+
+        <div class="admin-content-card">
+            <h2>Registered Users</h2>
+            <p id="users-message">Loading users...</p>
+            <div id="users-list"></div>
+        </div>
+
+        <a href="admin-dashboard.html">← Back to Dashboard</a>
+    </main>
+
+    <script>
+        async function loadUsers() {
+            const message = document.getElementById("users-message");
+            const list = document.getElementById("users-list");
+
+            try {
+                const response = await fetch("/api/admin/users");
+
+                if (!response.ok) {
+                    throw new Error("Could not load users");
+                }
+
+                const users = await response.json();
+                message.textContent = "Total Users: " + users.length;
+
+                users.forEach(user => {
+                    const card = document.createElement("div");
+                    card.className = "admin-stat-card";
+
+                    const name = document.createElement("h3");
+                    name.textContent = user.name || "User";
+
+                    const email = document.createElement("p");
+                    email.textContent = "Email: " + (user.email || "Not available");
+
+                    card.append(name, email);
+                    list.appendChild(card);
+                });
+
+            } catch (error) {
+                message.textContent = "Users API abhi connect nahi hui hai.";
+            }
+        }
+
+        loadUsers();
+    </script>
+
+</body>
+
+</html>

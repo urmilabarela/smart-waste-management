@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSort Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body class="admin-page">
+
+    <header class="admin-topbar">
+        <button id="menu-toggle">☰</button>
+        <h2>♻️ EcoSort Admin</h2>
+        <span>Administrator</span>
+    </header>
+
+    <aside class="admin-sidebar" id="admin-sidebar">
+        <div class="sidebar-title">
+            <h3>ADMIN PANEL</h3>
+            <button id="menu-close">✕</button>
+        </div>
+
+        <a href="admin-dashboard.html">🏠 Overview</a>
+        <a href="admin-reports.html">📋 Manage Reports</a>
+        <a href="admin-users.html">👥 Manage Users</a>
+        <a href="admin-centers.html">📍 Manage Centers</a>
+        <a href="admin-analytics.html">📊 Analytics</a>
+        <a href="admin-feedback.html">💬 Feedback</a>
+        <a href="#" id="admin-logout">🚪 Logout</a>
+    </aside>
+
+    <div class="admin-overlay" id="admin-overlay"></div>
+
+    <main class="admin-main">
+        <h1>Dashboard Overview</h1>
+        <p>Welcome to EcoSort Administration Panel.</p>
+
+        <section class="admin-stats">
+            <div class="admin-stat-card">
+                <h3>Total Reports</h3>
+                <h2 id="totalReports">0</h2>
+            </div>
+
+            <div class="admin-stat-card">
+                <h3>Pending Reports</h3>
+                <h2 id="pendingReports">0</h2>
+            </div>
+
+            <div class="admin-stat-card">
+                <h3>Completed Reports</h3>
+                <h2 id="completedReports">0</h2>
+            </div>
+
+            <div class="admin-stat-card">
+                <h3>Total Users</h3>
+                <h2 id="totalUsers">0</h2>
+            </div>
+        </section>
+
+        <section class="admin-content-card">
+            <h2>Recent Reports</h2>
+            <div id="recentReports">
+                <p>Report data will appear here.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>
