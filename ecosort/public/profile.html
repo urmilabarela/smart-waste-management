@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSort | Create Profile</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #071b2b, #123d50);
+            color: white;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 20px;
+        }
+
+        .profile-box {
+            width: 90%;
+            max-width: 480px;
+            padding: 30px;
+            background: #102d40;
+            border-radius: 18px;
+            border: 1px solid #24758a;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        h1 span {
+            color: #13c6dc;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            margin: 9px 0;
+            border-radius: 8px;
+            border: 1px solid #477184;
+            background: #183e52;
+            color: white;
+            font-size: 15px;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #b5cbd5;
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #13c6dc;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 12px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0eacc0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="profile-box">
+
+        <h1>ECO<span>SORT</span></h1>
+        <h2>Create Your Profile</h2>
+
+        <form id="profileForm">
+
+            <input id="name" type="text" placeholder="Full Name" required>
+
+            <input id="phone" type="tel" placeholder="Mobile Number" pattern="[0-9]{10}" maxlength="10" required>
+
+            <input id="city" type="text" placeholder="City" required>
+
+            <input id="state" type="text" placeholder="State" required>
+
+            <textarea id="address" placeholder="Full Address" required></textarea>
+
+            <button type="submit">Save Profile</button>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        // Load previously saved profile
+        const savedProfile = JSON.parse(
+            localStorage.getItem("ecosortProfile") || "null"
+        );
+
+        if (savedProfile) {
+            document.getElementById("name").value = savedProfile.name || "";
+            document.getElementById("phone").value = savedProfile.phone || "";
+            document.getElementById("city").value = savedProfile.city || "";
+            document.getElementById("state").value = savedProfile.state || "";
+            document.getElementById("address").value = savedProfile.address || "";
+        }
+
+        // Save profile
+        document.getElementById("profileForm")
+            .addEventListener("submit", function (e) {
+
+                e.preventDefault();
+
+                const profile = {
+                    name: document.getElementById("name").value.trim(),
+                    phone: document.getElementById("phone").value.trim(),
+                    city: document.getElementById("city").value.trim(),
+                    state: document.getElementById("state").value.trim(),
+                    address: document.getElementById("address").value.trim()
+                };
+
+                localStorage.setItem(
+                    "ecosortProfile",
+                    JSON.stringify(profile)
+                );
+
+                alert("Profile saved successfully!");
+
+                window.location.href = "index.html";
+
+            });
+
+    </script>
+
+</body>
+
+</html>
