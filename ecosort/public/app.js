@@ -24,8 +24,8 @@ $('#nav').outerHTML = `
 
     <a href="index.html">🏠 Dashboard</a>
     <a href="report.html">📝 Report Waste</a>
-    <a href="classifity.html">♻️ Classify Waste</a>
-    <a href="center.html">📍 Find Center</a>
+    <a href="classify.html">♻️ Classify Waste</a>
+    <a href="centers.html">📍 Find Center</a>
     <a href="track.html">📊 Track Reports</a>
     <a href="how.html">ℹ️ How It Works</a>
     <a href="feedback.html">💬 Feedback</a>
