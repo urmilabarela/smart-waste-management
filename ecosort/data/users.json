@@ -32,6 +32,14 @@
     "name": "Admin",
     "email": "umabarde613@gmail.com",
     "password": "$2b$10$TwoFG6.eeFve/ieVMC.u2OQqHKGn7XcNcifwD.el0JJgNipmvdYty",
-    "role": "admin"
+    "role": "user"
+  },
+  {
+    "id": "c7842fac-b939-4a68-8d17-aa91d25ef16a",
+    "name": "",
+    "email": "barderahul458@gmail.com",
+    "password": "$2b$10$3bEO/fz7WPI3kSS1OtsuDeYSceQ2RCnmdUjEW16HYY3xTDLNijsHq",
+     "role": "admin"
+   
   }
 ]

@@ -278,7 +278,7 @@ app.post('/api/auth/register', async (req, res) => {
     }
 
     const users = loadUsers();
-    console.log(users.map(u => ({ email: u.email, role: u.role })));
+    
     const cleanEmail = email.trim().toLowerCase();
 
     if (users.find(user => user.email === cleanEmail)) {
